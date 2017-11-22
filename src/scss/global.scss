@@ -1,0 +1,23 @@
+
+
+body{
+  background-color: $green;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  p{
+    font-size: responsive 12px 21px;
+    font-range: 420px 1280px;
+  }
+  img{
+    width: 300px;
+  }
+  button{
+    width: auto;
+    max-width: 250px;
+    padding: 10px;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
