@@ -82,14 +82,15 @@ module.exports = {
         ),
         new UglifyJsPlugin({
             test: /\.js($|\?)/i,
-            sourceMap: true,
-            ie8: false,
-            ecma: 8,
+            debug: true,
+            minimize: true,
+            sourceMap: false,
             output: {
-                comments: false,
-                beautify: false,
+                comments: false
             },
-            warnings: false
+            compressor: {
+                warnings: false
+            }
         })
     ]
 };
