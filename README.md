@@ -8,9 +8,9 @@ ili <strong>yarn install</strong> <br>
 
 <h2>Korišćenje:</h2>
 <h3>Startovanje dev servera</h3>
-<strong>npm run start</strong> 
+<strong>npm run dev</strong> 
 ili 
-<strong>yarn start</strong> <br> 
+<strong>yarn dev</strong> <br> 
 
 <h3>Build-ovanje fajlova za produkciju unutar "dist" foldera</h3>
 <strong>npm run build</strong> 
