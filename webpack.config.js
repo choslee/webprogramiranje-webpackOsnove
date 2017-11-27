@@ -1,9 +1,11 @@
+const path = require ('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const path = require ('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
+
 
 
 module.exports = {
@@ -82,15 +84,20 @@ module.exports = {
         ),
         new UglifyJsPlugin({
             test: /\.js($|\?)/i,
-            debug: true,
-            minimize: true,
-            sourceMap: false,
-            output: {
-                comments: false
-            },
-            compressor: {
-                warnings: false
+            uglifyOptions: {
+                debug: true,
+                minimize: true,
+                sourceMap: false,
+                output: {
+                    comments: false
+                },
+                compress: {
+                    warnings: false
+                }
             }
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify("process.env.NODE_ENV")
         })
     ]
 };

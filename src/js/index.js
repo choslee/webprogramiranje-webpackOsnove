@@ -1,3 +1,4 @@
+/* global System */
 import '../scss/main.scss';
 import {stampajProbu} from './nekiModul';
 
@@ -18,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Imamo problema sa učitavanjem prosledjenog modula kroz Promise", error);
             });
     }
-
 }, false);
 
 
