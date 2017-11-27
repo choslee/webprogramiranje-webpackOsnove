@@ -62,6 +62,20 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin("styles.css"),
+        new UglifyJsPlugin({
+            test: /\.js($|\?)/i,
+            uglifyOptions: {
+                debug: true,
+                minimize: true,
+                sourceMap: false,
+                output: {
+                    comments: false
+                },
+                compress: {
+                    warnings: false
+                }
+            }
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/views/index.html',
@@ -82,20 +96,6 @@ module.exports = {
                 reload: false                     // Sprečava da BrowserSync reloaduje stranu, da bi to uradio WebpackDev Server
             }
         ),
-        new UglifyJsPlugin({
-            test: /\.js($|\?)/i,
-            uglifyOptions: {
-                debug: true,
-                minimize: true,
-                sourceMap: false,
-                output: {
-                    comments: false
-                },
-                compress: {
-                    warnings: false
-                }
-            }
-        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify("process.env.NODE_ENV")
         })
