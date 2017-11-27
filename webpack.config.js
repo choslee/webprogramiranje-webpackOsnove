@@ -7,15 +7,15 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 
-
 module.exports = {
     entry: {
         indexJS: "./src/js/index.js",
-        drugaJS: "./src/js/druga.js"
+        drugaJS: "./src/js/druga.js",
+        vendor: ["jquery"]
     },
     output: {
-        filename: "[name].bundle.js",
-        path: path.resolve(__dirname, "dist")   // Putanja fajla koji se generiše
+        path: path.resolve(__dirname, "dist"),   // Putanja fajla koji se generiše
+        filename: "[name].bundle.js"
 
     },
     devtool: 'inline-source-map',
@@ -62,29 +62,15 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin("styles.css"),
-        new UglifyJsPlugin({
-            test: /\.js($|\?)/i,
-            uglifyOptions: {
-                debug: true,
-                minimize: true,
-                sourceMap: false,
-                output: {
-                    comments: false
-                },
-                compress: {
-                    warnings: false
-                }
-            }
-        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/views/index.html',
-            chunks: ['indexJS']
+            chunks: ['indexJS', "vendor"]
         }),
         new HtmlWebpackPlugin({
             filename: 'druga.html',
             template: 'src/views/druga.html',
-            chunks: ['drugaJS']
+            chunks: ['drugaJS', "vendor"]
         }),
         new CleanWebpackPlugin(['dist']),
         new BrowserSyncPlugin({
@@ -98,6 +84,31 @@ module.exports = {
         ),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify("process.env.NODE_ENV")
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ["vendor"],
+            minChunks: Infinity
+        }),
+
+
     ]
 };
+
+if (process.env.NODE_ENV.trim() === 'production') {
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new UglifyJsPlugin({
+            test: /\.js($|\?)/i,
+            uglifyOptions: {
+                debug: true,
+                minimize: true,
+                sourceMap: false,
+                output: {
+                    comments: false
+                },
+                compress: {
+                    warnings: false
+                }
+            }
+        })
+    ])
+}
